@@ -13,7 +13,7 @@ const App = () => {
     console.log(n);
 
     const resp = await fetch(`https://rickandmortyapi.com/api/character?page=${n}`)
-    return resp.json() as unknown as CharacterResult
+    return await resp.json() as unknown as CharacterResult
   }
 
   const { data, isLoading } = useQuery(['character', page], () => characters(page), {
