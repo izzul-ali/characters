@@ -10,8 +10,8 @@ const Card = ({ characters }: Props) => {
             {
                 characters.map((v, i) => {
                     return (
-                        <div key={v.id} className={`${i % 2 !== 0 ? 'text-right' : ''} flex gap-2 sm:gap-5 w-full h-40 justify-around bg-black/20 py-4 px-4 rounded shadow-lg`}>
-                            <img className={`w-28 lg:w-56 h-full rounded ${i % 2 !== 0 ? 'order-1 sm:order-none' : ''}`} src={v.image} alt={v.name} />
+                        <div key={v.id} className={`${i % 2 !== 0 ? 'text-right' : ''} flex gap-2 sm:gap-5 w-full h-40 sm:h-48 justify-around bg-black/20 py-4 px-4 rounded shadow-lg`}>
+                            <img className={`w-28 sm:w-36 lg:w-56 h-full rounded ${i % 2 !== 0 ? 'order-1 sm:order-none' : ''}`} src={v.image} alt={v.name} />
                             <div className="flex flex-col justify-between w-1/2">
                                 <div className="space-y-1">
                                     <p className="text-lg font-bold">{v.name}</p>
