@@ -12,7 +12,7 @@ const Card = ({ characters }: Props) => {
             {
                 characters.map((v, i) => {
                     return (
-                        <div key={v.name} className="flex gap-5 w-full justify-evenly bg-black/20 py-5 rounded shadow-lg">
+                        <div key={v.id} className="flex gap-5 w-full justify-evenly bg-black/20 py-5 rounded shadow-lg">
                             <img className={`w-28 lg:w-56 h-fit ${i % 2 !== 0 ? 'order-1 sm:order-none' : ''}`} src={v.image} alt={v.name} />
                             <div className="flex flex-col justify-between">
                                 <div className="">
