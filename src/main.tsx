@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './assets/css/index.css'
 
-// setting config here
+// react-query config
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

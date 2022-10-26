@@ -1,38 +1,44 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import Card from "./components/Card";
 import Header from "./components/Header"
-import Loading from "./components/icons/Loading";
+import Loading from "./components/Loading";
 import { CharacterResult } from "./types/character";
+import Card from "./components/Card";
+import BtnScrollTop from "./components/BtnScrollTop";
 
 const App = () => {
-  // first using react query in page
-  const [page, setPage] = useState<number>(0)
+  const [page, setPage] = useState<number>(1)
 
-  // fetch data from api
-  // if using useEffect hooks, this characters will fetch twice to api
   const characters = async (n: number) => {
     console.log(n);
 
-    const resp = await fetch(`https://rickandmortyapi.com/api/character?page=${n + 1}`)
+    const resp = await fetch(`https://rickandmortyapi.com/api/character?page=${n}`)
     return resp.json() as unknown as CharacterResult
   }
 
-  const { data, isFetching } = useQuery(['character', page], () => characters(page), {
-    keepPreviousData: true // this config mean keep chacing previous paginate data
+  const { data, isLoading } = useQuery(['character', page], () => characters(page), {
+    // Set this to true to keep the previous data when fetching based on a new query key. 
+    keepPreviousData: true,
+
+    // If set to true, the query will refetch on window focus if the data is stale. If set to false, the query will not refetch on window focus. 
+    refetchOnWindowFocus: false
   })
 
-  console.log(data?.results);
+  // console.log(data?.results);
 
-  if (isFetching) {
+  // if (isPreviousData) {
+  //   console.log("---isPreviousData---");
+  // }
+
+  // if (isFetched) {
+  //   console.log("---isFetched---");
+  // }
+
+  if (isLoading) {
     return (
-      <div className="h-80">
+      <div className="h-full">
         <Header />
-
-        <div className="h-full w-full flex items-center justify-center">
-          <Loading className="animate-spin" />
-        </div>
-
+        <Loading />
       </div>
     )
   }
@@ -40,13 +46,17 @@ const App = () => {
   return (
     <div className="h-full">
       <Header />
-      {
-        data ? <Card characters={data?.results} /> : null
-      }
-      <div className="my-5 space-x-3">
+
+      <div className="mt-20 space-x-3 w-fit mx-auto">
         <button type="button" disabled={page === 1} onClick={() => setPage((p => p - 1))} className="bg-gray-200 disabled:bg-gray-500 text-gray-900 px-3 py-1 rounded text-sm">Previous</button>
         <button type="button" disabled={page === 42} onClick={() => setPage((p) => p + 1)} className="bg-gray-200 disabled:bg-gray-500 text-gray-900 px-3 py-1 rounded text-sm">Next</button>
       </div>
+
+      {
+        data ? <Card characters={data.results} /> : null
+      }
+
+      <BtnScrollTop />
     </div>
   )
 }
